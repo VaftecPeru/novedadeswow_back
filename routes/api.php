@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShopifyController;
 use App\Http\Controllers\PedidoEstadoController;
 use App\Http\Controllers\NotificacionAlmacenController;
+use App\Http\Controllers\PedidoInternoController;
+
 
 
 Route::get('/shopify/orders', [ShopifyController::class, 'getOrders']);
@@ -22,3 +24,9 @@ Route::get('/estado-pedido-todos', [PedidoEstadoController::class, 'listarEstado
 Route::post('/notificaciones/almacen', [NotificacionAlmacenController::class, 'store']);
 Route::get('/notificaciones/almacen', [NotificacionAlmacenController::class, 'index']);
 Route::post('/notificaciones/almacen/{id}/leido', [NotificacionAlmacenController::class, 'marcarLeido']);
+
+// Rutas para pedidos interno
+
+Route::post('/pedido-interno', [PedidoInternoController::class, 'storeOrUpdate']);
+Route::put('/pedido-interno/{shopify_order_id}', [PedidoInternoController::class, 'storeOrUpdate']);
+Route::get('/pedido-interno/shopify/{shopify_order_id}', [PedidoInternoController::class, 'showByShopifyId']);
