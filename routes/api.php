@@ -5,6 +5,7 @@ use App\Http\Controllers\ShopifyController;
 use App\Http\Controllers\PedidoEstadoController;
 use App\Http\Controllers\NotificacionAlmacenController;
 use App\Http\Controllers\PedidoInternoController;
+use App\Http\Controllers\PedidoExternoController;
 
 
 
@@ -30,3 +31,10 @@ Route::post('/notificaciones/almacen/{id}/leido', [NotificacionAlmacenController
 Route::post('/pedido-interno', [PedidoInternoController::class, 'storeOrUpdate']);
 Route::put('/pedido-interno/{shopify_order_id}', [PedidoInternoController::class, 'storeOrUpdate']);
 Route::get('/pedido-interno/shopify/{shopify_order_id}', [PedidoInternoController::class, 'showByShopifyId']);
+
+// Rutas para pedidos externo
+Route::post('/pedido-externo', [PedidoExternoController::class, 'storeOrUpdate']);
+Route::put('/pedido-externo/{shopify_order_id}', [PedidoExternoController::class, 'storeOrUpdate']);
+Route::post('/pedido-externo-envio', [PedidoExternoController::class, 'storeOrUpdateEnvio']);
+Route::put('/pedido-externo-envio/{shopify_order_id}', [PedidoExternoController::class, 'storeOrUpdateEnvio']);
+Route::get('/pedido-externo/shopify/{shopify_order_id}', [PedidoExternoController::class, 'showByShopifyId']);
