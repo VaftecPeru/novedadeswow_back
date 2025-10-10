@@ -7,6 +7,9 @@ use App\Http\Controllers\NotificacionAlmacenController;
 use App\Http\Controllers\PedidoInternoController;
 use App\Http\Controllers\PedidoExternoController;
 
+use App\Http\Controllers\SeguimientoPedidoController;
+use App\Http\Controllers\UsuarioController;
+
 
 
 Route::get('/shopify/orders', [ShopifyController::class, 'getOrders']);
@@ -19,7 +22,7 @@ Route::post('/shopify/pedidos/{id}/pagar', [ShopifyController::class, 'marcarCom
 //rutas del api estado de pedidos
 Route::post('/estado-pedido', [PedidoEstadoController::class, 'actualizarEstado']);
 Route::get('/estado-pedido/{shopify_order_id}', [PedidoEstadoController::class, 'obtenerEstado']);
-Route::get('/estado-pedido-todos', [PedidoEstadoController::class, 'listarEstados']); 
+Route::get('/estado-pedido-todos', [PedidoEstadoController::class, 'listarEstados']);
 
 //rutas del api notificaciones
 Route::post('/notificaciones/almacen', [NotificacionAlmacenController::class, 'store']);
@@ -38,3 +41,12 @@ Route::put('/pedido-externo/{shopify_order_id}', [PedidoExternoController::class
 Route::post('/pedido-externo-envio', [PedidoExternoController::class, 'storeOrUpdateEnvio']);
 Route::put('/pedido-externo-envio/{shopify_order_id}', [PedidoExternoController::class, 'storeOrUpdateEnvio']);
 Route::get('/pedido-externo/shopify/{shopify_order_id}', [PedidoExternoController::class, 'showByShopifyId']);
+
+
+Route::post('/seguimiento-pedido', [SeguimientoPedidoController::class, 'store']);
+Route::get('/seguimiento-pedido/{shopify_order_id}/historial', [SeguimientoPedidoController::class, 'historial']);
+
+Route::get('/usuarios', [UsuarioController::class, 'index']);
+Route::get('/usuarios/vendedores', [UsuarioController::class, 'vendedores']);
+Route::get('/usuarios/almacen', [UsuarioController::class, 'almacen']);
+Route::get('/usuarios/delivery', [UsuarioController::class, 'delivery']);
