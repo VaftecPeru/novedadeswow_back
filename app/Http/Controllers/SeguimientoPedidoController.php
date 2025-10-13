@@ -23,17 +23,47 @@ class SeguimientoPedidoController extends Controller
     }
 
     public function store(Request $request): JsonResponse
-{
-    $seguimiento = SeguimientoPedido::create([
-        'shopify_order_id' => $request->shopify_order_id,
-        'area' => $request->area,
-        'estado' => $request->estado,
-        'responsable_id' => $request->responsable_id,
-    ]);
+    {
+        $seguimiento = SeguimientoPedido::create([
+            'shopify_order_id' => $request->shopify_order_id,
+            'area' => $request->area,
+            'estado' => $request->estado,
+            'responsable_id' => $request->responsable_id,
+        ]);
 
-    return response()->json([
-        'message' => 'Seguimiento guardado correctamente',
-        'data' => $seguimiento->load('responsable'),
-    ], 201);
-}
+        return response()->json([
+            'message' => 'Seguimiento guardado correctamente',
+            'data' => $seguimiento->load('responsable'),
+        ], 201);
+    }
+
+    public function getVentasSeguimientos(): JsonResponse
+    {
+        $seguimientos = SeguimientoPedido::where('area', 'ventas')
+            ->whereNotNull('responsable_id')
+            ->with(['responsable' => function ($query) {
+                $query->select('id', 'nombre_completo');
+            }])
+            ->get();
+
+        return response()->json([
+            'message' => 'Seguimientos de ventas obtenidos correctamente',
+            'data' => $seguimientos,
+        ], 200);
+    }
+
+    public function getAlmacenSeguimientos(): JsonResponse
+    {
+        $seguimientos = SeguimientoPedido::where('area', 'Almacen')
+            ->whereNotNull('responsable_id')
+            ->with(['responsable' => function ($query) {
+                $query->select('id', 'nombre_completo');
+            }])
+            ->get();
+
+        return response()->json([
+            'message' => 'Seguimientos de almacen obtenidos correctamente',
+            'data' => $seguimientos,
+        ], 200);
+    }
 }

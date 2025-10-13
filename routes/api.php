@@ -44,6 +44,8 @@ Route::get('/pedido-externo/shopify/{shopify_order_id}', [PedidoExternoControlle
 
 
 Route::post('/seguimiento-pedido', [SeguimientoPedidoController::class, 'store']);
+Route::get('/seguimiento-pedido/vendedores', [SeguimientoPedidoController::class, 'getVentasSeguimientos']);
+Route::get('/seguimiento-pedido/almacen', [SeguimientoPedidoController::class, 'getAlmacenSeguimientos']);
 Route::get('/seguimiento-pedido/{shopify_order_id}/historial', [SeguimientoPedidoController::class, 'historial']);
 
 Route::get('/usuarios', [UsuarioController::class, 'index']);
