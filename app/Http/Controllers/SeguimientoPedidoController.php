@@ -66,4 +66,19 @@ class SeguimientoPedidoController extends Controller
             'data' => $seguimientos,
         ], 200);
     }
+
+    public function getDeliverySeguimientos(): JsonResponse
+    {
+        $seguimientos = SeguimientoPedido::where('area', 'Delivery')
+            ->whereNotNull('responsable_id')
+            ->with(['responsable' => function ($query) {
+                $query->select('id', 'nombre_completo');
+            }])
+            ->get();
+
+        return response()->json([
+            'message' => 'Seguimientos de delivery obtenidos correctamente',
+            'data' => $seguimientos,
+        ], 200);
+    }
 }
