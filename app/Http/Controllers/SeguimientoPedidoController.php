@@ -37,6 +37,22 @@ class SeguimientoPedidoController extends Controller
         ], 201);
     }
 
+     public function getAdministracionSeguimientos(): JsonResponse
+    {
+        $seguimientos = SeguimientoPedido::where('area', 'administracion')
+            ->whereNotNull('responsable_id')
+            ->with(['responsable' => function ($query) {
+                $query->select('id', 'nombre_completo');
+            }])
+            ->get();
+
+        return response()->json([
+            'message' => 'Seguimientos de administracion obtenidos correctamente',
+            'data' => $seguimientos,
+        ], 200);
+    }
+
+
     public function getVentasSeguimientos(): JsonResponse
     {
         $seguimientos = SeguimientoPedido::where('area', 'ventas')

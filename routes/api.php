@@ -8,6 +8,7 @@ use App\Http\Controllers\PedidoInternoController;
 use App\Http\Controllers\PedidoExternoController;
 
 use App\Http\Controllers\SeguimientoPedidoController;
+use App\Http\Controllers\SeguimientoPagoController;
 use App\Http\Controllers\UsuarioController;
 
 
@@ -44,10 +45,14 @@ Route::get('/pedido-externo/shopify/{shopify_order_id}', [PedidoExternoControlle
 
 
 Route::post('/seguimiento-pedido', [SeguimientoPedidoController::class, 'store']);
+Route::get('/seguimiento-pedido/administracion', [SeguimientoPedidoController::class, 'getAdministracionSeguimientos']);
 Route::get('/seguimiento-pedido/vendedores', [SeguimientoPedidoController::class, 'getVentasSeguimientos']);
 Route::get('/seguimiento-pedido/almacen', [SeguimientoPedidoController::class, 'getAlmacenSeguimientos']);
 Route::get('/seguimiento-pedido/delivery', [SeguimientoPedidoController::class, 'getDeliverySeguimientos']);
 Route::get('/seguimiento-pedido/{shopify_order_id}/historial', [SeguimientoPedidoController::class, 'historial']);
+
+Route::get('/seguimiento-pago', [SeguimientoPagoController::class, 'index']);
+Route::get('/seguimiento-pago/historial/{shopify_order_id}', [SeguimientoPagoController::class, 'historial']);
 
 Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/usuarios/vendedores', [UsuarioController::class, 'vendedores']);
