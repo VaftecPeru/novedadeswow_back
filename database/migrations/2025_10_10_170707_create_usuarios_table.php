@@ -9,19 +9,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('usuarios', function (Blueprint $table) {
-            $table->id();
+            $table->id()->startingValue(10); 
             $table->string('nombre_completo', 100);
             $table->string('correo', 100)->unique();
             $table->string('contraseña', 255);
             $table->unsignedBigInteger('rol_id');
-            $table->timestamp('fecha_creacion')->useCurrent();
-            $table->timestamps();
+            $table->boolean('estado')->default(0); // Cambiado a 0 (no en línea)
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
             $table->foreign('rol_id')
                   ->references('id')
                   ->on('roles')
-                  ->onDelete('restrict')
                   ->onUpdate('cascade');
+
+            // Configurar charset y collation
+            $table->charset = 'latin1';
+            $table->collation = 'latin1_swedish_ci';
         });
     }
 

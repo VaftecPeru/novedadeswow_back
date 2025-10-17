@@ -58,3 +58,16 @@ Route::get('/usuarios', [UsuarioController::class, 'index']);
 Route::get('/usuarios/vendedores', [UsuarioController::class, 'vendedores']);
 Route::get('/usuarios/almacen', [UsuarioController::class, 'almacen']);
 Route::get('/usuarios/delivery', [UsuarioController::class, 'delivery']);
+
+Route::post('/login', [UsuarioController::class, 'login']);
+
+Route::middleware('auth.token')->group(function () {
+    Route::get('/usuarios', [UsuarioController::class, 'index']);
+    Route::get('/usuarios/vendedores', [UsuarioController::class, 'vendedores']);
+    Route::get('/usuarios/almacen', [UsuarioController::class, 'almacen']);
+    Route::get('/usuarios/delivery', [UsuarioController::class, 'delivery']);
+    Route::post('/usuarios', [UsuarioController::class, 'store']);
+    Route::put('/usuarios/{id}', [UsuarioController::class, 'update']);
+    Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy']);
+    Route::post('/usuarios/reset-password', [UsuarioController::class, 'resetPassword']);
+});
