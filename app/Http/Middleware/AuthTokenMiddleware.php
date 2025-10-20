@@ -14,9 +14,11 @@ class AuthTokenMiddleware
     {
         $authHeader = $request->header('Authorization');
 
+        // Validar header
         if (!$authHeader || !preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
             return response()->json([
-                'error' => 'Token no proporcionado'
+                'error' => 'Token no proporcionado',
+                'code' => 'TOKEN_MISSING'
             ], 401, [], JSON_UNESCAPED_UNICODE);
         }
 
@@ -29,7 +31,8 @@ class AuthTokenMiddleware
 
         if (!$usuarioToken) {
             return response()->json([
-                'error' => 'Token inválido o expirado'
+                'error' => 'Token inválido o expirado',
+                'code' => 'TOKEN_INVALID'
             ], 401, [], JSON_UNESCAPED_UNICODE);
         }
 

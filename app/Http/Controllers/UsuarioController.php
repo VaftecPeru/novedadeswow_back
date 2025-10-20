@@ -237,4 +237,29 @@ class UsuarioController extends Controller
             ], 500, [], JSON_UNESCAPED_UNICODE);
         }
     }
+
+    // USUARIO AUTENTICADO (ya lo tienes)
+    public function showAuthUser(Request $request)
+    {
+        $user = $request->user()->load('rol');
+        return response()->json([
+            'message' => 'Usuario obtenido',
+            'data' => $user
+        ]);
+    }
+
+    // LOGOUT
+    public function logout(Request $request): JsonResponse
+    {
+        $token = $request->header('Authorization');
+        $token = preg_replace('/Bearer\s/', '', $token);
+
+        UsuarioToken::where('token', $token)->delete();
+
+        $request->user()->update(['estado' => 0]);
+
+        return response()->json([
+            'message' => 'Logout exitoso'
+        ], 200, [], JSON_UNESCAPED_UNICODE);
+    }
 }

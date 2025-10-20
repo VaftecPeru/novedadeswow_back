@@ -54,14 +54,14 @@ Route::get('/seguimiento-pedido/{shopify_order_id}/historial', [SeguimientoPedid
 Route::get('/seguimiento-pago', [SeguimientoPagoController::class, 'index']);
 Route::get('/seguimiento-pago/historial/{shopify_order_id}', [SeguimientoPagoController::class, 'historial']);
 
-Route::get('/usuarios', [UsuarioController::class, 'index']);
-Route::get('/usuarios/vendedores', [UsuarioController::class, 'vendedores']);
-Route::get('/usuarios/almacen', [UsuarioController::class, 'almacen']);
-Route::get('/usuarios/delivery', [UsuarioController::class, 'delivery']);
-
 Route::post('/login', [UsuarioController::class, 'login']);
 
 Route::middleware('auth.token')->group(function () {
+
+    // LOGOUT
+    Route::post('/logout', [UsuarioController::class, 'logout']);
+    Route::get('/usuario', [UsuarioController::class, 'showAuthUser']);
+    
     Route::get('/usuarios', [UsuarioController::class, 'index']);
     Route::get('/usuarios/vendedores', [UsuarioController::class, 'vendedores']);
     Route::get('/usuarios/almacen', [UsuarioController::class, 'almacen']);
