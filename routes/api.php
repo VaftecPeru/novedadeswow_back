@@ -16,7 +16,7 @@ use App\Http\Controllers\UsuarioController;
 Route::get('/shopify/orders', [ShopifyController::class, 'getOrders']);
 Route::get('/shopify/locations', [ShopifyController::class, 'obtenerUbicaciones']);
 Route::post('/shopify/fulfill/{orderId}', [ShopifyController::class, 'fulfillOrder']);
-Route::get('shopify/orders/{orderId}.json', [ShopifyController::class, 'getOrderById']);
+Route::get('/shopify/orders/{orderId}.json', [ShopifyController::class, 'getOrderById']);
 Route::post('/shopify/pedidos/{id}/pagar', [ShopifyController::class, 'marcarComoPagado']);
 
 

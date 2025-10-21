@@ -37,7 +37,7 @@ class SeguimientoPedidoController extends Controller
         ], 201);
     }
 
-     public function getAdministracionSeguimientos(): JsonResponse
+    public function getAdministracionSeguimientos(): JsonResponse
     {
         $seguimientos = SeguimientoPedido::where('area', 'administracion')
             ->whereNotNull('responsable_id')
@@ -60,6 +60,14 @@ class SeguimientoPedidoController extends Controller
             ->with(['responsable' => function ($query) {
                 $query->select('id', 'nombre_completo');
             }])
+            ->select('seguimiento_pedido.*')
+            ->whereIn('id', function ($query) {
+                $query->selectRaw('MAX(id)')
+                    ->from('seguimiento_pedido')
+                    ->where('area', 'ventas')
+                    ->whereNotNull('responsable_id')
+                    ->groupBy('shopify_order_id');
+            })
             ->get();
 
         return response()->json([
@@ -75,6 +83,14 @@ class SeguimientoPedidoController extends Controller
             ->with(['responsable' => function ($query) {
                 $query->select('id', 'nombre_completo');
             }])
+            ->select('seguimiento_pedido.*')
+            ->whereIn('id', function ($query) {
+                $query->selectRaw('MAX(id)')
+                    ->from('seguimiento_pedido')
+                    ->where('area', 'Almacen')
+                    ->whereNotNull('responsable_id')
+                    ->groupBy('shopify_order_id');
+            })
             ->get();
 
         return response()->json([
@@ -90,6 +106,14 @@ class SeguimientoPedidoController extends Controller
             ->with(['responsable' => function ($query) {
                 $query->select('id', 'nombre_completo');
             }])
+            ->select('seguimiento_pedido.*')
+            ->whereIn('id', function ($query) {
+                $query->selectRaw('MAX(id)')
+                    ->from('seguimiento_pedido')
+                    ->where('area', 'Delivery')
+                    ->whereNotNull('responsable_id')
+                    ->groupBy('shopify_order_id');
+            })
             ->get();
 
         return response()->json([
