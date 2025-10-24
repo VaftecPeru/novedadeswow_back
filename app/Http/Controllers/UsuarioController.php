@@ -204,7 +204,8 @@ class UsuarioController extends Controller
             }
 
             $token = Str::random(64);
-            $expiresAt = now()->addHours(1);
+            $tokenDurationHours = $usuario->rol->nombre === 'Administrador' ? 8 : 4;
+            $expiresAt = now()->addHours($tokenDurationHours);
 
             $usuarioToken = UsuarioToken::create([
                 'user_id' => $usuario->id,
